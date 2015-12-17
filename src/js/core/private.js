@@ -1636,6 +1636,7 @@ var _getElementPosition = function(el) {
     // Compute left / top offset (works for `position:fixed`, too!)
     var elRect = el.getBoundingClientRect();
 
+    var containerParent = _document.getElementById(_globalConfig.containerId).parentNode;
     // Get the document's scroll offsets
     var pageXOffset = _window.pageXOffset;
     var pageYOffset = _window.pageYOffset;
@@ -1648,11 +1649,11 @@ var _getElementPosition = function(el) {
     // This is critical for when the `body` element's CSS includes `position:relative`
     var leftBodyOffset = 0;
     var topBodyOffset = 0;
-    if (_getStyle(_document.body, "position") === "relative") {
-      var bodyRect = _document.body.getBoundingClientRect();
+    if (_getStyle(containerParent, "position") === "relative") {
+      var containerParentRect = containerParent.getBoundingClientRect();
       var htmlRect = _document.documentElement.getBoundingClientRect();
-      leftBodyOffset = (bodyRect.left - htmlRect.left) || 0;
-      topBodyOffset = (bodyRect.top - htmlRect.top) || 0;
+      leftBodyOffset = (containerParentRect.left - htmlRect.left) || 0;
+      topBodyOffset = (containerParentRect.top - htmlRect.top) || 0;
     }
 
     pos.left = elRect.left + pageXOffset - leftBorderWidth - leftBodyOffset;
