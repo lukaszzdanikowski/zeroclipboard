@@ -1611,17 +1611,19 @@
     };
     if (el.getBoundingClientRect) {
       var elRect = el.getBoundingClientRect();
+      var containerParent = _document.getElementById(_globalConfig.containerId).parentNode;
       var pageXOffset = _window.pageXOffset;
       var pageYOffset = _window.pageYOffset;
       var leftBorderWidth = _document.documentElement.clientLeft || 0;
       var topBorderWidth = _document.documentElement.clientTop || 0;
       var leftBodyOffset = 0;
       var topBodyOffset = 0;
-      if (_getStyle(_document.body, "position") === "relative") {
-        var bodyRect = _document.body.getBoundingClientRect();
+      var containerPosition = _getStyle(containerParent, "position");
+      if (containerPosition === "relative" || containerPosition === "absolute") {
+        var containerParentRect = containerParent.getBoundingClientRect();
         var htmlRect = _document.documentElement.getBoundingClientRect();
-        leftBodyOffset = bodyRect.left - htmlRect.left || 0;
-        topBodyOffset = bodyRect.top - htmlRect.top || 0;
+        leftBodyOffset = containerParentRect.left - htmlRect.left || 0;
+        topBodyOffset = containerParentRect.top - htmlRect.top || 0;
       }
       pos.left = elRect.left + pageXOffset - leftBorderWidth - leftBodyOffset;
       pos.top = elRect.top + pageYOffset - topBorderWidth - topBodyOffset;

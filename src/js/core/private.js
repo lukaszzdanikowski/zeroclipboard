@@ -1637,6 +1637,7 @@ var _getElementPosition = function(el) {
     var elRect = el.getBoundingClientRect();
 
     var containerParent = _document.getElementById(_globalConfig.containerId).parentNode;
+
     // Get the document's scroll offsets
     var pageXOffset = _window.pageXOffset;
     var pageYOffset = _window.pageYOffset;
@@ -1649,7 +1650,8 @@ var _getElementPosition = function(el) {
     // This is critical for when the `body` element's CSS includes `position:relative`
     var leftBodyOffset = 0;
     var topBodyOffset = 0;
-    if (_getStyle(containerParent, "position") === "relative") {
+    var containerPosition = _getStyle(containerParent, "position");
+    if (containerPosition === "relative" || containerPosition === "absolute") {
       var containerParentRect = containerParent.getBoundingClientRect();
       var htmlRect = _document.documentElement.getBoundingClientRect();
       leftBodyOffset = (containerParentRect.left - htmlRect.left) || 0;
